@@ -9,8 +9,8 @@
   + <strong>Website</strong>:http://funbrary.herokuapp.com/
 
 + <h2>Checkpoint slides:</h2><br>
-   Following slides represents the progress how we accomplish our project.<br>
-   If you have any questions or comments about our project, please let us know!<br>
+   Following slides represent the progress how we accomplish our project.<br>
+   If you have any question or comments about our project, please let us know!<br>
    Here are the address:
     + statine@hotmail.com
     + linda66585@gmail.com
