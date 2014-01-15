@@ -1,7 +1,5 @@
 3-Funbrary-fall2013
-+Semi-Product 2013-12-24
++Fianl-Product 2014-01-15
 +	Collect the fan page posts correctlly
-+	
-+	Unfinished:
-+	Log in
-+	Favorite
++	Able to add to favorite list
++	Share posts with others on Facebook
