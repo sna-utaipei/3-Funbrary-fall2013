@@ -38,7 +38,7 @@
                 
             $user_id = $_COOKIE['user_id'];
 
-            if($catalogy = 'general'){
+            if($catalogy == 'general'){
                 $query_fetch_posts = "SELECT post_id FROM favorite WHERE (user_id = '$user_id' AND author = '$page');";
                 $statement_fetch_posts = pg_query($databaseConnection,$query_fetch_posts);
                 $rows = pg_num_rows($statement_fetch_posts);
@@ -70,7 +70,7 @@
                     try {
                         for($i=0;$i<$rows;$i++) {
                             $post = $post_list[$i]->post_id;
-                            $fbpagetopic = $facebook->api("/$post");
+                            $fbpagetopic  = $facebook->api("/$post");
                             $array[$count] = $fbpagetopic;
                             $count++;
                         }
@@ -175,6 +175,7 @@
     </script>
 </head>
 <body bgclolr="#C9C9C9" data-target="#sidebar" data-spy="scroll" bgproperties="fixed">
+<div id="fb-root"></div>
 <script>
     window.fbAsyncInit = function() {
         // init the FB JS SDK
@@ -251,7 +252,7 @@
                 foreach ($list_name as $key => $value) {
                     $name = str_replace("  ", "", $value->cata_name);
                     if(substr($name, -1) == " "){
-                        $name = substr($name, (strlen($name)-1));
+                        $name = substr($name, 0 , -1);
                     }                        
                     echo '<li><a href="#'.$name.'" class="fav_tab" value="'.$name.'" data-toggle="tab">'.$name.'</a></li>';
                 }
@@ -264,14 +265,13 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-            <div class="tab-pane active" id="   ">
+            <div class="tab-pane active" id="General">
                 <!--<iframe src="fav_list.php" align="center" width="780" height="850" marginwidth="0" scrolling="yes"></iframe>
                -->
                 <div id="post-content" class="row"><!--Post 放的地方-->
                 <?php
                     $datas = array('cherngs.y','MissUndine','lusia.chiachinlu','cwwany.tw','sinkcomic','ByeByeChuChu','LaoBanZheYu','Aidahello','9gag','nagee.tw');
                     global $databaseConnection;
-                    global $list_name;
                     
                     if($_COOKIE['user_id'] != null)
                     {                
@@ -377,17 +377,13 @@
                 </div><!--/ENDPOST_CONTENT-->     
             </div><!--tab-pane active-->
             <?php 
-                global $list_name;
                 if($list_name[0]!=null){
                     foreach($list_name as $l=>$value){
                         $name = str_replace("  ", "", $value->cata_name);
                         if(substr($name, -1) == " "){
-                            $name = substr($name, (strlen($name)-1));
+                            $name = substr($name, 0 , -1);
                         } 
-                        echo '<div class="tab-pane" id="'.$name.'">';
-            ?>
-            <div id="post-content" class="row">
-                <?php
+                        echo '<div class="tab-pane" id="'.$name.'"><div id="post-content" class="row">';
                         $author_list = array();
                         $author = array();
                         $count = 0;
@@ -417,7 +413,7 @@
                         $topic = '';
                      
                         $page = getPageInfo($author[$i]);
-                        $topic = getPagePosts($author[$i],$list_name[$l]);
+                        $topic = getPagePosts($author[$i],$name);
                         $profile = 'http://graph.facebook.com/'.$author[$i].'/picture';
                 ?>
                     <div id="feed" class="col-xs-8 col-md-7 col-md-offset-2">
